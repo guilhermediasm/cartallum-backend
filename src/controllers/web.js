@@ -7,7 +7,7 @@ const router = express.Router();
 router.get('/', async (req, res) => {
 
     try {
-        return res.send({
+        return res.status(200).send({
             success: true,
             menssagem: "Iniciado"
         });
