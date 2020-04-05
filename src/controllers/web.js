@@ -2,7 +2,7 @@ const express = require('express');
 
 const router = express.Router();
 
-router.get(async (req, res) => {
+router.get('/', function (req, res) {
 
     try {
         return res.status(200).send({
@@ -17,4 +17,4 @@ router.get(async (req, res) => {
 
 
 
-module.exports = app => app.use('/', router);
+module.exports = app => app.use(router);
