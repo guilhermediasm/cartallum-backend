@@ -1,0 +1,22 @@
+const express = require('express');
+
+const Familia = require('../models/familia');
+
+const router = express.Router();
+
+router.get('/', async (req, res) => {
+
+    try {
+        return res.send({
+            success: true,
+            menssagem: "Iniciado"
+        });
+    } catch (err) {
+        return res.status(400).send({ error: 'Registration failed' });
+
+    }
+})
+
+
+
+module.exports = app => app.use(router);
