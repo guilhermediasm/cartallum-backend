@@ -1,10 +1,8 @@
 const express = require('express');
 
-const Familia = require('../models/familia');
-
 const router = express.Router();
 
-router.get('/', async (req, res) => {
+router.get(async (req, res) => {
 
     try {
         return res.status(200).send({
@@ -19,4 +17,4 @@ router.get('/', async (req, res) => {
 
 
 
-module.exports = app => app.use(router);
+module.exports = app => app.use('/', router);
