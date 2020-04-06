@@ -19,13 +19,12 @@ router.get('/get_familia', async (req, res) => {
 
 router.post('/busca_familia', async (req, res) => {
     const { cpf } = req.query
-    console.log(cpf)
 
 
     const familia = await Familia.find({
         "integrantes.cpf": { $eq: cpf }
     });
-    console.log(familia)
+    
     if (familia != null) {
         return res.send(familia);
     } else {
