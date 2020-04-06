@@ -2,7 +2,7 @@ const mongoose = require('../database');
 const bcrypt = require('bcryptjs')
 const endereco = require('./utils/endereco')
 
-const AgenteSchema = new mongoose.Schema({
+const InstituicaoSchema = new mongoose.Schema({
     nomeInstituicao: {
         type: String,
         require: true,
@@ -24,13 +24,13 @@ const AgenteSchema = new mongoose.Schema({
     endereco: endereco,
 });
 
-AgenteSchema.pre('save', async function (next) {
+InstituicaoSchema.pre('save', async function (next) {
     const hash = await bcrypt.hash(this.password, 10);
     this.password = hash;
 
     next();
 })
 
-const Agente = mongoose.model('Agente', AgenteSchema);
+const Instituicao = mongoose.model('Instituicao',InstituicaoSchema);
 
-module.exports = Agente;
+module.exports = Instituicao;

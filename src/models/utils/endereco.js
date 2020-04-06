@@ -13,6 +13,10 @@ const endereco = new mongoose.Schema({
         type: Number,
         require: true
     },
+    complemento: {
+        type: String,
+        required: false
+    },
     cep: {
         type: String,
         required: true
