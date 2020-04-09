@@ -18,16 +18,23 @@ router.use(authMiddleware);
 
 //Cadastra familia
 router.post('/cadastroFamilia', async (req, res) => {
-    try {
+    User.create(req.body).then(success => {
+        return res.send({ success });
+    })
+        .catch(err => {
+            console.log('req.body:', err)
+            res.status(400).send({ error: 'Registration failed', menssagem: err });
+        })
+    /* try {
         console.log('req.body:', req.body)
         const familia = await User.create(req.body);
 
 
-        return res.send({ familia });
+        
     } catch (err) {
         return res.status(400).send({ error: 'Registration failed', menssagem: err });
 
-    }
+    } */
 })
 
 router.post('/register', async (req, res) => {
