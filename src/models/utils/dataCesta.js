@@ -3,11 +3,11 @@ const mongoose = require('mongoose')
 const dataCesta = new mongoose.Schema({
     nomeInstituicao: {
         type: String,
-        required: true
+        required: false
     },
     data: {
         type: Date,
-        require: true
+        require: false
     }
 
 });
