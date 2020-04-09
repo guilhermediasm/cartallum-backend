@@ -19,6 +19,7 @@ router.use(authMiddleware);
 //Cadastra familia
 router.post('/cadastroFamilia', async (req, res) => {
     try {
+        console.log('req.body:', req.body)
         const familia = await User.create(req.body);
 
 
