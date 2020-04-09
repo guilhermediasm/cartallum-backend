@@ -11,6 +11,7 @@ require('./controllers/web')(app)
 require('./controllers/authController')(app)
 require('./controllers/registerController')(app)
 require('./controllers/getController')(app)
+require('./controllers/projectController')(app)
 
 
 app.listen(process.env.PORT || 3000, function () {

@@ -4,19 +4,25 @@ const Familia = require('../models/familia');
 
 const router = express.Router();
 
+//Busca todas as familias
+const authMiddleware = require('../middlewares/auth')
+
+router.use(authMiddleware);
+
 router.get('/get_familia', async (req, res) => {
 
     try {
 
         const familia = await Familia.find();
 
-        return res.send(familia);
+        return res.send({ success: true, familia });
     } catch (err) {
         return res.status(400).send({ error: 'Registration failed' });
 
     }
 })
 
+//busca familia pelo cpf do integrante
 router.post('/busca_familia', async (req, res) => {
     const { cpf } = req.query
 
@@ -24,7 +30,7 @@ router.post('/busca_familia', async (req, res) => {
     const familia = await Familia.find({
         "integrantes.cpf": { $eq: cpf }
     });
-    
+
     if (familia != null) {
         return res.send(familia);
     } else {

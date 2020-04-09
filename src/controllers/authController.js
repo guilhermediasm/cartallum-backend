@@ -1,29 +1,19 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+
+const authConfig = require('../config/auth')
 
 const Instituicao = require('../models/instituicao');
 
 const router = express.Router();
 
-router.post('/register', async (req, res) => {
-    const { email, nomeInstituicao } = req.body
+function generateToken(params = {}) {
+    return jwt.sign(params, authConfig.secret, {
+        expiresIn: 86400,
+    })
+}
 
-    try {
-        if (await Instituicao.findOne({ email })) {
-            return res.status(400).send({ error: 'Instituicao already exists' });
-        } else if (await Instituicao.findOne({ nomeInstituicao })) {
-            return res.status(400).send({ error: 'Instituicao already exists' });
-        }
-        const instituicao = await Instituicao.create(req.body);
-
-        instituicao.password = undefined
-
-        return res.send({ instituicao });
-    } catch (err) {
-        return res.status(400).send({ error: 'Registration failed' });
-
-    }
-})
 
 router.post('/authenticate', async (req, res) => {
     const { login, password } = req.body
@@ -44,9 +34,13 @@ router.post('/authenticate', async (req, res) => {
         if (!await bcrypt.compare(password, instituicao.password))
             return res.status(400).send({ success: false, error: 'Invalid password' });
 
+        instituicao.password = undefined;
+
+
         res.send({
             success: true,
-            instituicao
+            instituicao,
+            token: generateToken({ id: instituicao.id })
         })
     } catch (err) {
         return res.status(400).send({ error: 'Registration failed' });
