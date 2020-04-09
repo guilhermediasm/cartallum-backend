@@ -9,7 +9,7 @@ const FamiliaSchema = new mongoose.Schema({
     integrantes: [pessoa],
 
     rendaPercapita: {
-        type: Number,
+        type: String,
         required: true
     },
     endereco: endereco,

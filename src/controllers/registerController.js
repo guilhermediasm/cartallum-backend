@@ -25,7 +25,7 @@ router.post('/cadastroFamilia', async (req, res) => {
 
         return res.send({ familia });
     } catch (err) {
-        return res.status(400).send({ error: 'Registration failed' });
+        return res.status(400).send({ error: 'Registration failed', menssagem: err });
 
     }
 })
