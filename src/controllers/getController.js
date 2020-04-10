@@ -24,8 +24,7 @@ router.get('/get_familia', async (req, res) => {
 
 //busca familia pelo cpf do integrante
 router.post('/busca_familia', async (req, res) => {
-    const { cpf } = req.query
-
+    const { cpf } = req.body
 
     const familia = await Familia.find({
         "integrantes.cpf": { $eq: cpf }
