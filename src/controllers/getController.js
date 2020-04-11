@@ -27,7 +27,7 @@ router.post('/update_cesta', async (req, res) => {
     try {
 
         await Familia.updateOne({ _id: id }, { $push: { dataCestas: cesta } })
-        const familia = await Familia.find({ _id: id })
+        const familia = await Familia.find({ "_id": id })
         
         return res.send({ success: true, familia });
 

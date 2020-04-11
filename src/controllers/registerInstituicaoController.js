@@ -11,6 +11,7 @@ function generateToken(params = {}) {
     })
 }
 
+
 router.post('/cadastro', async (req, res) => {
     const { email, nomeInstituicao } = req.body
 
