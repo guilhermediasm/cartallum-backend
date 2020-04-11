@@ -12,7 +12,6 @@ function generateToken(params = {}) {
 }
 
 router.post('/cadastro', async (req, res) => {
-    console.log(req.body)
     const { email, nomeInstituicao } = req.body
 
     try {
@@ -21,7 +20,7 @@ router.post('/cadastro', async (req, res) => {
         } else if (await Instituicao.findOne({ nomeInstituicao })) {
             return res.status(400).send({ error: 'Instituicao already exists' });
         }
-     
+
         const instituicao = await Instituicao.create(req.body);
 
         instituicao.password = undefined
@@ -32,5 +31,7 @@ router.post('/cadastro', async (req, res) => {
 
     }
 })
+
+
 
 module.exports = app => app.use('/instituicao', router);

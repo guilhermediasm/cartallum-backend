@@ -22,6 +22,22 @@ router.get('/get_familia', async (req, res) => {
     }
 })
 
+router.post('/update_cesta', async (req, res) => {
+    const { id, cesta } = req.body
+    console.log(cesta)
+    try {
+
+        await Familia.updateOne({ _id: id }, { $push: { dataCestas: cesta } })
+
+        return res.send({ success: true });
+    } catch (err) {
+        return res.status(400).send({ error: 'Erro em encontrar familia' });
+
+    }
+
+})
+
+
 //busca familia pelo cpf do integrante
 router.post('/busca_familia', async (req, res) => {
     const { cpf } = req.body
