@@ -27,9 +27,11 @@ router.post('/update_cesta', async (req, res) => {
     try {
 
         await Familia.updateOne({ _id: id }, { $push: { dataCestas: cesta } })
-        const familia = await Familia.find({ "_id": id })
-        
-        return res.send({ success: true, familia });
+        await Familia.find({ "_id": id }).then(success => {
+            return res.send({ success: true, familia: success });
+        })
+
+
 
     } catch (err) {
         return res.status(400).send({ error: 'Erro em encontrar familia' });
@@ -37,6 +39,7 @@ router.post('/update_cesta', async (req, res) => {
     }
 
 })
+
 
 
 //busca familia pelo cpf do integrante
