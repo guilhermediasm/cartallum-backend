@@ -6,7 +6,7 @@ const dataCesta = new mongoose.Schema({
         required: false
     },
     data: {
-        type: Date,
+        type: String,
         require: false
     }
 

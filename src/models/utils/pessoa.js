@@ -6,7 +6,7 @@ const pessoa = new mongoose.Schema({
         require: true,
     },
     dataNascimento: {
-        type: Date,
+        type: String,
         required: true
     },
     cpf: {
