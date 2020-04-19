@@ -9,7 +9,6 @@ const InstituicaoSchema = new mongoose.Schema({
     },
     tipo: {
         type: String,
-        default: 'cliente',
         require: false
     },
     email: {
@@ -24,7 +23,7 @@ const InstituicaoSchema = new mongoose.Schema({
     },
     telefone: {
         type: String,
-        required: true
+        required: false
     },
     endereco: endereco,
 });
