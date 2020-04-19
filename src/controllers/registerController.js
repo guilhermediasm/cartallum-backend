@@ -27,13 +27,13 @@ router.post('/cadastroFamilia', async (req, res) => {
             })
                 .catch(err => {
                     console.log('req.body:', err)
-                    res.status(400).send({ error: 'Registration failed', menssagem: err });
+                    res.status(200).send({ success: false, msg: 'ocorreu um erro na hora de cadastrar familia, por favor tente mais tarde', erro: err });
                 })
         } else {
-            res.status(400).send({ success: false, menssagem: 'Já exite um integrante com esse cpf' });
+            res.status(200).send({ success: false, menssagem: 'Já exite um integrante com esse cpf' });
         }
     } catch (error) {
-        res.status(400).send({ success: false, menssagem: error });
+        res.status(200).send({ success: false, msg: 'ocorreu um erro na hora de cadastrar familia, por favor tente mais tarde', erro: error });
     }
 
 

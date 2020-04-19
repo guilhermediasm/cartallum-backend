@@ -28,11 +28,11 @@ router.post('/authenticate', async (req, res) => {
         } else if (await Instituicao.findOne({ nomeInstituicao })) {
             instituicao = await Instituicao.findOne({ nomeInstituicao }).select('+password')
         } else {
-            return res.status(400).send({ success: false, error: 'User not found' });
+            return res.status(200).send({ success: false, msg: 'Nao foi possivel fazer login' });
         }
 
         if (!await bcrypt.compare(password, instituicao.password))
-            return res.status(400).send({ success: false, error: 'Invalid password' });
+            return res.status(200).send({ success: false, msg: 'A senha e invalida' });
 
         instituicao.password = undefined;
 
@@ -43,7 +43,7 @@ router.post('/authenticate', async (req, res) => {
             token: generateToken({ id: instituicao.id })
         })
     } catch (err) {
-        return res.status(400).send({ error: 'Registration failed' });
+        return res.status(200).send({ success: false, msg: 'Ocorreu um erro na autenticação, por favor tente mais parte', erro: err });
 
     }
 })

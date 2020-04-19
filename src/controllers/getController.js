@@ -17,7 +17,7 @@ router.get('/get_familia', async (req, res) => {
 
         return res.send({ success: true, familia });
     } catch (err) {
-        return res.status(400).send({ error: 'Registration failed' });
+        return res.status(200).send({ success: false, msg: 'Ocorreu um erro em buscar as familias, por favor tente mais tarde', erro: err });
 
     }
 })
@@ -28,13 +28,16 @@ router.post('/update_cesta', async (req, res) => {
 
         await Familia.updateOne({ _id: id }, { $push: { dataCestas: cesta } })
         await Familia.find({ "_id": id }).then(success => {
-            return res.send({ success: true, familia: success });
+            return res.status(200).send({ success: true, familia: success });
         })
+            .catch(erro => {
+                return res.status(200).send({ success: false, msg: 'Ocorreu um erro em doar cesta', erro: erro });
+            })
 
 
 
     } catch (err) {
-        return res.status(400).send({ error: 'Erro em encontrar familia' });
+        return res.status(200).send({ success: false, msg: 'Erro em encontrar familia', erro: err });
 
     }
 
@@ -64,9 +67,9 @@ router.post('/busca_familia', async (req, res) => {
         return res.status(200).send({ success: true, familia, qtdIntegrantes: familia.length });
 
     } else if (cpf == '' && nomeCompleto == '') {
-        return res.status(400).send({
+        return res.status(200).send({
             success: false,
-            mensagem: "O CPF e o nome se encontra em formato invalido ou nao foi passado"
+            msg: "O CPF e o nome se encontra em formato invalido ou nao foi passado"
         })
     }
 
