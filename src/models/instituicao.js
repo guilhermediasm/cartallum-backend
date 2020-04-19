@@ -7,6 +7,11 @@ const InstituicaoSchema = new mongoose.Schema({
         type: String,
         require: true,
     },
+    tipo: {
+        type: String,
+        default: 'cliente',
+        require: false
+    },
     email: {
         type: String,
         require: false,
@@ -18,7 +23,7 @@ const InstituicaoSchema = new mongoose.Schema({
         select: false,
     },
     telefone: {
-        type: Number,
+        type: String,
         required: true
     },
     endereco: endereco,
@@ -31,6 +36,6 @@ InstituicaoSchema.pre('save', async function (next) {
     next();
 })
 
-const Instituicao = mongoose.model('Instituicao',InstituicaoSchema);
+const Instituicao = mongoose.model('Instituicao', InstituicaoSchema);
 
 module.exports = Instituicao;

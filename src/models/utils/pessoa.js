@@ -12,6 +12,10 @@ const pessoa = new mongoose.Schema({
     cpf: {
         type: String,
         require: true
+    },
+    telefone: {
+        type: String,
+        require: false
     }
 
 });

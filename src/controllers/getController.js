@@ -45,17 +45,28 @@ router.post('/update_cesta', async (req, res) => {
 //busca familia pelo cpf do integrante
 router.post('/busca_familia', async (req, res) => {
     const { cpf } = req.body
+    const { nomeCompleto } = req.body
+    console.log(nomeCompleto)
 
-    const familia = await Familia.find({
-        "integrantes.cpf": { $eq: cpf }
-    });
+    if (cpf !== '') {
+        const familia = await Familia.find({
+            "integrantes.cpf": { $eq: cpf }
+        });
 
-    if (familia != null) {
-        return res.send(familia);
-    } else {
-        return res.status(200).send({
-            success: true,
-            mensagem: "Ninguem foi encontrado"
+        return res.status(200).send({ success: true, familia, qtdIntegrantes: familia.length });
+
+    } else if (nomeCompleto !== '') {
+        const familia = await Familia.find({
+            "integrantes.nomeCompleto": { $eq: nomeCompleto }
+        });
+
+
+        return res.status(200).send({ success: true, familia, qtdIntegrantes: familia.length });
+
+    } else if (cpf == '' && nomeCompleto == '') {
+        return res.status(400).send({
+            success: false,
+            mensagem: "O CPF e o nome se encontra em formato invalido ou nao foi passado"
         })
     }
 
