@@ -7,7 +7,7 @@ const router = express.Router();
 //Busca todas as familias
 const authMiddleware = require('../middlewares/auth')
 
-router.use(authMiddleware);
+//router.use(authMiddleware);
 
 router.get('/get_familia', async (req, res) => {
 
@@ -60,7 +60,7 @@ router.post('/busca_familia', async (req, res) => {
 
     } else if (nomeCompleto !== '') {
         const familia = await Familia.find({
-            "integrantes.nomeCompleto": { $eq: nomeCompleto }
+            "integrantes.nomeCompleto": { $regex: nomeCompleto }
         });
 
 
