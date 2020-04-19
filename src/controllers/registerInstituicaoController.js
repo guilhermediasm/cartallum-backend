@@ -29,8 +29,9 @@ router.post('/cadastro', async (req, res) => {
 
         instituicao.password = undefined
 
-        return res.send({ instituicao, token: generateToken({ id: instituicao.id }) });
+        return res.send({ success: true, instituicao });
     } catch (err) {
+        console.log(err)
         return res.status(200).send({ success: false, msg: 'Ocorreu um erro no hora de cadastrar instituição, tende mais tarde', erro: err });
 
     }
