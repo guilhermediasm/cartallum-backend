@@ -7,7 +7,7 @@ const router = express.Router();
 //Busca todas as familias
 const authMiddleware = require('../middlewares/auth')
 
-//router.use(authMiddleware);
+router.use(authMiddleware);
 
 router.get('/get_familia', async (req, res) => {
 
