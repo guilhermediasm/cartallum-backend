@@ -14,7 +14,7 @@ function generateToken(params = {}) {
 }
 
 
-router.use(authMiddleware);
+//router.use(authMiddleware);
 router.post('/cadastro', async (req, res) => {
     const { email, nomeInstituicao } = req.body
 
@@ -41,9 +41,12 @@ router.post('/cadastro', async (req, res) => {
 router.get('/listarInstituicao', async (req, res) => {
 
     try {
-        const instituicao = await Instituicao.find();
-
-        instituicao.password = undefined
+        var instituicao = await Instituicao.find();
+        
+        for (i = 0; i < instituicao.length; i++) {
+       
+            instituicao[i].password = ""
+        }
 
         return res.send({ success: true, instituicao });
     } catch (err) {
@@ -60,11 +63,11 @@ router.post('/editar', async (req, res) => {
             if (rua != null || bairro != undefined || bairro != null || rua != undefined) {
                 try {
                     if (await Instituicao.findOne({ _id })) {
-                      
+
                         if (req.body.password != undefined && req.body.password != null && req.body.password != "" && req.body.password != " ") {
                             const hash = await bcrypt.hash(req.body.password, 10);
                             req.body.password = hash;
-                        }else{
+                        } else {
                             const instituicao = await Instituicao.findOne({ _id })
                             req.body.password = instituicao.password
                         }
