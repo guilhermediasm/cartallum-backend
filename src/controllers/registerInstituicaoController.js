@@ -14,7 +14,7 @@ function generateToken(params = {}) {
 }
 
 
-//router.use(authMiddleware);
+router.use(authMiddleware);
 router.post('/cadastro', async (req, res) => {
     const { email, nomeInstituicao } = req.body
 
@@ -42,9 +42,9 @@ router.get('/listarInstituicao', async (req, res) => {
 
     try {
         var instituicao = await Instituicao.find();
-        
+
         for (i = 0; i < instituicao.length; i++) {
-       
+
             instituicao[i].password = ""
         }
 
@@ -91,6 +91,30 @@ router.post('/editar', async (req, res) => {
         } else {
             return res.status(200).send({ success: false, msg: 'Por favor informar o nome da instituição' });
         }
+    } else {
+        return res.status(200).send({ success: false, msg: 'Ocorreu um erro na hora de editar instituição, favor informar os dados corretamente' });
+
+    }
+})
+
+router.post('/excluir', async (req, res) => {
+    const { _id } = req.body
+    if (req.body != undefined && req.body._id != undefined && req.body._id != "" && req.body._id != null) {
+        try {
+            const instituicao = await Instituicao.deleteOne({ _id })
+
+            if (instituicao.deletedCount > 0) {
+                return res.status(200).send({ success: true, msg: "Instituição foi excluida" });
+            }
+
+            return res.status(200).send({ success: false, msg: "Não foi possivel excluir essa instituição", instituicao });
+
+        } catch (error) {
+            console.log(error)
+            return res.status(200).send({ success: false, msg: 'Ocorreu um erro na hora de excluir instituicao', erro: error });
+
+        }
+
     } else {
         return res.status(200).send({ success: false, msg: 'Ocorreu um erro na hora de editar instituição, favor informar os dados corretamente' });
 
