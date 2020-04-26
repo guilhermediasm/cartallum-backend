@@ -3,35 +3,35 @@ const mongoose = require('mongoose')
 const endereco = new mongoose.Schema({
     rua: {
         type: String,
-        required: true
+        require: true
     },
     bairro: {
         type: String,
         require: true
     },
     numero: {
-        type: Number,
+        type: String,
         require: false
     },
     complemento: {
         type: String,
-        required: false
+        require: false
     },
     cep: {
         type: String,
-        required: true
+        require: true
     },
     cidade: {
         type: String,
-        required: true
+        require: true
     },
     estado: {
         type: String,
-        required: true
+        require: true
     },
     pais: {
         type: String,
-        required: true
+        require: true
     }
 
 });
