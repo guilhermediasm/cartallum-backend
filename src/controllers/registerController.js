@@ -5,8 +5,10 @@ const Familia = require('../models/familia');
 const router = express.Router();
 
 const authMiddleware = require('../middlewares/auth')
+const authMiddlewareEmail = require('../middlewares/email')
 
 router.use(authMiddleware);
+router.use(authMiddlewareEmail);
 
 //Cadastra familia
 router.post('/cadastroFamilia', async (req, res) => {
@@ -26,7 +28,6 @@ router.post('/cadastroFamilia', async (req, res) => {
                 return res.status(200).send({ success });
             })
                 .catch(err => {
-                    console.log('req.body:', err)
                     res.status(200).send({ success: false, msg: 'ocorreu um erro na hora de cadastrar familia, por favor tente mais tarde', erro: err });
                 })
         } else {

@@ -6,15 +6,11 @@ const Instituicao = require('../models/instituicao');
 const bcrypt = require('bcryptjs');
 
 const authMiddleware = require('../middlewares/auth')
-
-function generateToken(params = {}) {
-    return jwt.sign(params, authConfig.secret, {
-        expiresIn: 86400,
-    })
-}
+const authMiddlewareEmail = require('../middlewares/email')
 
 
 router.use(authMiddleware);
+router.use(authMiddlewareEmail);
 router.post('/cadastro', async (req, res) => {
     const { email, nomeInstituicao } = req.body
 
@@ -32,7 +28,6 @@ router.post('/cadastro', async (req, res) => {
 
         return res.send({ success: true, instituicao });
     } catch (err) {
-        console.log(err)
         return res.status(200).send({ success: false, msg: 'Ocorreu um erro no hora de cadastrar instituição, tende mais tarde', erro: err });
 
     }
@@ -81,7 +76,6 @@ router.post('/editar', async (req, res) => {
                     }
 
                 } catch (err) {
-                    console.log(err)
                     return res.status(200).send({ success: false, msg: 'Ocorreu um erro na hora de editar instituição', erro: err });
 
                 }
@@ -110,7 +104,6 @@ router.post('/excluir', async (req, res) => {
             return res.status(200).send({ success: false, msg: "Não foi possivel excluir essa instituição", instituicao });
 
         } catch (error) {
-            console.log(error)
             return res.status(200).send({ success: false, msg: 'Ocorreu um erro na hora de excluir instituicao', erro: error });
 
         }

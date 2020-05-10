@@ -1,13 +1,38 @@
 const express = require('express');
 
 const Familia = require('../models/familia');
+const Instituicao = require('../models/instituicao');
 
 const router = express.Router();
 
 //Busca todas as familias
 const authMiddleware = require('../middlewares/auth')
+const authMiddlewareEmail = require('../middlewares/email')
 
 router.use(authMiddleware);
+router.use(authMiddlewareEmail);
+
+router.get('/get_relatorio', async (req, res) => {
+
+    try {
+
+        const familia = await Familia.find();
+        const instituicao = await Instituicao.find();
+
+
+
+        return res.send(
+            {
+                success: true,
+                qtdFamilia: familia.length,
+                qtdInstituicao: instituicao.length,
+            }
+        );
+    } catch (err) {
+        return res.status(200).send({ success: false, msg: 'Ocorreu um erro em buscar o relatorio', erro: err });
+
+    }
+})
 
 router.get('/get_familia', async (req, res) => {
 
@@ -49,7 +74,6 @@ router.post('/update_cesta', async (req, res) => {
 router.post('/busca_familia', async (req, res) => {
     const { cpf } = req.body
     const { nomeCompleto } = req.body
-    console.log(nomeCompleto)
 
     if (cpf !== '') {
         const familia = await Familia.find({

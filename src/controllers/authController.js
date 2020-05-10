@@ -23,16 +23,16 @@ router.post('/authenticate', async (req, res) => {
 
     try {
         if (await Instituicao.findOne({ email })) {
-            console.log('Entrou')
+
             instituicao = await Instituicao.findOne({ email }).select('+password')
         } else if (await Instituicao.findOne({ nomeInstituicao })) {
             instituicao = await Instituicao.findOne({ nomeInstituicao }).select('+password')
         } else {
-            return res.status(200).send({ success: false, msg: 'Nao foi possivel fazer login' });
+            return res.status(200).send({ success: false, msg: 'Essa instituição não exite, favor cadastrar' });
         }
 
         if (!await bcrypt.compare(password, instituicao.password))
-            return res.status(200).send({ success: false, msg: 'A senha e invalida' });
+            return res.status(200).send({ success: false, msg: 'A senha e inválida' });
 
         instituicao.password = undefined;
 
