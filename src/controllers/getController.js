@@ -9,7 +9,7 @@ const router = express.Router();
 const authMiddleware = require('../middlewares/auth')
 const authMiddlewareEmail = require('../middlewares/email')
 
-router.use(authMiddleware);
+ router.use(authMiddleware);
 router.use(authMiddlewareEmail);
 
 router.get('/get_relatorio', async (req, res) => {
@@ -19,16 +19,45 @@ router.get('/get_relatorio', async (req, res) => {
         const familia = await Familia.find();
         const instituicao = await Instituicao.find();
 
+        var data = []
+        instituicao.map(valueInsituicao => {
+            data.push({
+                nomeInstituicao: valueInsituicao.nomeInstituicao,
+                quantidade: 0,
+                ativa: true
+            })
+        })
 
+        familia.map(valueFamilia => {
+            valueFamilia.dataCestas.map(valueCesta => {
+
+                let entrou = false;
+                data.map(valueData => {
+                    if (valueData.nomeInstituicao == valueCesta.nomeInstituicao) {
+                        entrou = true
+                        valueData.quantidade = valueData.quantidade + 1
+                    }
+                })
+                if (!entrou) {
+                    data.push({
+                        nomeInstituicao: valueCesta.nomeInstituicao == undefined ? 'Erro Nome' : valueCesta.nomeInstituicao,
+                        quantidade: 1,
+                        ativa: false
+                    })
+                }
+            })
+        })
 
         return res.send(
             {
                 success: true,
                 qtdFamilia: familia.length,
                 qtdInstituicao: instituicao.length,
+                data
             }
         );
     } catch (err) {
+        console.log(err)
         return res.status(200).send({ success: false, msg: 'Ocorreu um erro em buscar o relatorio', erro: err });
 
     }

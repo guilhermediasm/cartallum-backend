@@ -9,7 +9,8 @@ const InstituicaoSchema = new mongoose.Schema({
     },
     tipo: {
         type: String,
-        require: false
+        require: false,
+        default:"cliente"
     },
     email: {
         type: String,
