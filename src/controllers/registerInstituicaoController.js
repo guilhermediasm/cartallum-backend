@@ -24,7 +24,7 @@ router.post('/cadastro', async (req, res) => {
 
         const instituicao = await Instituicao.create(req.body);
 
-        //instituicao.password = undefined
+        instituicao.password = undefined
 
         return res.send({ success: true, instituicao });
     } catch (err) {
