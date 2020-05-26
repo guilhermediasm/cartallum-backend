@@ -3,6 +3,7 @@ const Instituicao = require('../models/instituicao');
 module.exports = async (req, res, next) => {
 
     const authHeader = req.headers.authorizationemail;
+    
     if (authHeader != undefined) {
         if (await Instituicao.findOne({ email: authHeader })) {
 
