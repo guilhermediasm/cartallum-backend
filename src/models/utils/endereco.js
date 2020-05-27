@@ -27,11 +27,12 @@ const endereco = new mongoose.Schema({
     },
     estado: {
         type: String,
-        require: true
+        require: false
     },
     pais: {
         type: String,
-        require: true
+        require: false,
+        default:"Brasil"
     }
 
 });
