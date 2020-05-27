@@ -11,7 +11,8 @@ const endereco = new mongoose.Schema({
     },
     numero: {
         type: String,
-        require: false
+        require: false,
+        default:"s/n"
     },
     complemento: {
         type: String,
