@@ -20,11 +20,11 @@ const endereco = new mongoose.Schema({
     },
     cep: {
         type: String,
-        require: true
+        require: false
     },
     cidade: {
         type: String,
-        require: true
+        require: false
     },
     estado: {
         type: String,
