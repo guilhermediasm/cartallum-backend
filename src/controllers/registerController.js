@@ -4,37 +4,44 @@ const Familia = require('../models/familia');
 
 const router = express.Router();
 
-const authMiddleware = require('../middlewares/auth')
+const authMiddleware = require('../middlewares/auth');
 
 router.use(authMiddleware);
 
-//Cadastra familia
+// Cadastra familia
 router.post('/cadastroFamilia', async (req, res) => {
-    const { integrantes } = req.body
-    var familia = []
-    try {
-        for (i = 0; i < integrantes.length; i++) {
-            familia = await Familia.find({
-                "integrantes.cpf": { $eq: integrantes[i].cpf }
+  const { integrantes } = req.body;
+  let familia = [];
+  try {
+    integrantes.forEach(async (member) => {
+      familia = await Familia.find({
+        'integrantes.cpf': { $eq: member.cpf },
+      });
+    });
 
-            })
-
-        }
-
-        if (familia.length == 0) {
-            Familia.create(req.body).then(success => {
-                return res.status(200).send({ success });
-            })
-                .catch(err => {
-                    res.status(200).send({ success: false, msg: 'ocorreu um erro na hora de cadastrar familia, por favor tente mais tarde', erro: err });
-                })
-        } else {
-            res.status(200).send({ success: false, msg: 'Já exite um integrante com esse cpf' });
-        }
-    } catch (error) {
-        res.status(200).send({ success: false, msg: 'ocorreu um erro na hora de cadastrar familia, por favor tente mais tarde', erro: error });
+    if (familia.length === 0) {
+      Familia.create(req.body)
+        .then((success) => res.status(200).send({ success }))
+        .catch((err) => {
+          res.status(200).send({
+            success: false,
+            msg:
+              'ocorreu um erro na hora de cadastrar familia, por favor tente mais tarde',
+            erro: err,
+          });
+        });
+    } else {
+      res
+        .status(200)
+        .send({ success: false, msg: 'Já exite um integrante com esse cpf' });
     }
-
-
-})
-module.exports = app => app.use('/register', router);
+  } catch (error) {
+    res.status(200).send({
+      success: false,
+      msg:
+        'ocorreu um erro na hora de cadastrar familia, por favor tente mais tarde',
+      erro: error,
+    });
+  }
+});
+module.exports = (app) => app.use('/register', router);
