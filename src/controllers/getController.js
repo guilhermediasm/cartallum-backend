@@ -12,7 +12,7 @@ const authMiddlewareEmail = require('../middlewares/email')
  router.use(authMiddleware);
 router.use(authMiddlewareEmail);
 
-router.get('/get_relatorio', async (req, res) => {
+router.get('/relatorio_geral', async (req, res) => {
 
     try {
 
@@ -22,6 +22,7 @@ router.get('/get_relatorio', async (req, res) => {
         var data = []
         instituicao.map(valueInsituicao => {
             data.push({
+                id: valueInsituicao.id,
                 nomeInstituicao: valueInsituicao.nomeInstituicao,
                 quantidade: 0,
                 ativa: true
