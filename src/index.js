@@ -6,6 +6,18 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
+if (process.env.NODE_ENV == 'production') {
+    console.log('Production')
+} else {
+    console.log('Not Production')
+
+    require('dotenv').config();
+  
+    console.log('process.env.S3_KEY', process.env.S3_KEY)
+
+}
+
+
 require('./controllers/web')(app)
 
 require('./controllers/authController')(app)
